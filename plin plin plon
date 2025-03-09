@@ -1,0 +1,75 @@
+Random Quote Generator
+
+Step 1: Create a New Android Studio Project, Open Android Studio.  Click on New Project, Select Empty Activity. 
+
+
+Step 2: Modify activity_main.xml (UI Layout)
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/textViewQuote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Press the button for a quote"
+        android:textSize="18sp"
+        android:padding="16dp"/>
+
+    <Button
+        android:id="@+id/buttonGenerate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Generate Quote"/>
+</LinearLayout>
+
+Step 3: Modify MainActivity.java
+
+package com.example.randomquoteapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import java.util.Random;
+
+public class MainActivity extends AppCompatActivity {
+
+    TextView textViewQuote;
+    Button buttonGenerate;
+    String[] quotes = {
+            "The best way to predict the future is to invent it.",
+            "Success is not final, failure is not fatal.",
+            "You miss 100% of the shots you don't take.",
+            "Believe you can and you're halfway there.",
+            "In the middle of every difficulty lies opportunity."
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        textViewQuote = findViewById(R.id.textViewQuote);
+        buttonGenerate = findViewById(R.id.buttonGenerate);
+
+        buttonGenerate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Random random = new Random();
+                int index = random.nextInt(quotes.length);
+                textViewQuote.setText(quotes[index]);
+            }
+        });
+    }
+}
+
+Step 4: Run the Application
+Connect your Android device or use an emulator.
