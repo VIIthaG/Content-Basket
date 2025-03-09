@@ -1,0 +1,90 @@
+ Java Code (CustomToast.java)
+Create a separate Java class for your custom toast.
+
+CustomToast.java
+package com.example.yourappname;
+
+import android.app.Activity;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class CustomToast {
+
+    public static void showToast(Context context, String message, int iconResId) {
+        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+        View customView = inflater.inflate(R.layout.custom_toast_layout, null);
+
+        TextView textView = customView.findViewById(R.id.toast_text);
+        ImageView imageView = customView.findViewById(R.id.toast_icon);
+
+        textView.setText(message);
+        imageView.setImageResource(iconResId);
+
+        Toast toast = new Toast(context);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(customView);
+        toast.show();
+    }
+}
+
+XML Layout (custom_toast_layout.xml)
+Place this in res/layout/custom_toast_layout.xml.
+
+custom_toast_layout.xml
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:background="@drawable/toast_bg"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:id="@+id/toast_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/toast_icon" />
+
+    <TextView
+        android:id="@+id/toast_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
+</LinearLayout>
+
+Background (toast_bg.xml)
+Place this in res/drawable/toast_bg.xml.
+
+toast_bg.xml
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#333333"/>
+    <corners android:radius="12dp"/>
+    <padding android:left="10dp" android:right="10dp"
+        android:top="8dp" android:bottom="8dp"/>
+</shape>
+
+Usage in Activity
+Now you can use the custom toast like this in any Activity.
+
+MainActivity.java
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Show Custom Toast
+        CustomToast.showToast(this, "This is a custom toast!", R.drawable.ic_success);
+    }
+}
